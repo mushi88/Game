@@ -1,16 +1,15 @@
 from tkinter import *
+from tkinter import filedialog
 
 class Window(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
         self.master=master
+        self.text=None
         self.setup()
         
     def setup(self):
         self.master.title("Asset Creater")
-        
-        self.text=Text(self)
-        self.text.pack()
         
         self.menu=Menu(self)
         self.fmenu=Menu(self.menu)
@@ -24,6 +23,14 @@ class Window(Frame):
         self.fmenu.add_command(label="Exit", command=exitapp)
         
     def newfile(self):
+        if not self.text==None:
+            self.text.pack_forget()
+        
+        self.text=Text(self)
+        self.text.pack()
+        
+    def savefile(self):
+        
         
 root=Tk()
 App=Window(root)
