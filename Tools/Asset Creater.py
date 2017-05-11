@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 
 class Window(Frame):
     def __init__(self, master):
@@ -30,7 +31,25 @@ class Window(Frame):
         self.text.pack()
         
     def savefile(self):
+        file=filedialog.asksaveasfile(mode='w')
         
+        if file !n= None:
+            Data=self.text.get('1.0', END+'-1c')
+            file.write(Data)
+            file.close()
+    
+    def openfile(self):
+        file=filedialog.askopenfile(parent=self, mode='rb', title="Select a file")
+        
+        if file != None:
+            Data=file.read()
+            self.newfile()
+            self.text.insert('1.0', Data)
+            file.close()
+    
+    def exitwindow(self):
+        if messagebox.askokcancel("Exit", "Do you really want to exit?")
+            self.master.destroy()
         
 root=Tk()
 App=Window(root)
