@@ -15,13 +15,13 @@ class Window(Frame):
         self.menu=Menu(self)
         self.fmenu=Menu(self.menu)
         self.master.config(menu=self.menu)
-        self.menu.add_cascade(label="File", menu=fmenu)
+        self.menu.add_cascade(label="File", menu=self.fmenu)
         
-        self.fmenu.add_command(label="New", command=newfile)
-        self.fmenu.add_command(label="Open File", command=openfile)
-        self.fmenu.add_command(label="Save", command=savefile)
+        self.fmenu.add_command(label="New", command=self.newfile)
+        self.fmenu.add_command(label="Open File", command=self.openfile)
+        self.fmenu.add_command(label="Save", command=self.savefile)
         self.fmenu.add_separator()
-        self.fmenu.add_command(label="Exit", command=exitapp)
+        self.fmenu.add_command(label="Exit", command=self.exitapp)
         
     def newfile(self):
         if not self.text==None:
@@ -48,7 +48,7 @@ class Window(Frame):
             file.close()
     
     def exitwindow(self):
-        if messagebox.askokcancel("Exit", "Do you really want to exit?")
+        if messagebox.askokcancel("Exit", "Do you really want to exit?"):
             self.master.destroy()
         
 root=Tk()
