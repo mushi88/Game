@@ -23,20 +23,25 @@ class Window(Frame):
         self.fmenu.add_separator()
         self.fmenu.add_command(label="Exit", command=self.exitapp)
         
-    def newfile(self):
-        if not self.text==None:
-            self.text.pack_forget()
-        
         self.text=Text(self)
         self.text.pack()
         
+    def newfile(self):
+        if not self.saved:
+            if messagebox.askokcancel("Confirm", "Do you want to save this file?"):
+                self.savefile()
+                
+        
+        
+    
     def savefile(self):
         file=filedialog.asksaveasfile(mode='w')
         
-        if file !n= None:
+        if file != None:
             Data=self.text.get('1.0', END+'-1c')
             file.write(Data)
             file.close()
+            self.saved=True
     
     def openfile(self):
         file=filedialog.askopenfile(parent=self, mode='rb', title="Select a file")
