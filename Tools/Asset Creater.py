@@ -23,6 +23,8 @@ class Window(Frame):
         self.fmenu.add_separator()
         self.fmenu.add_command(label="Exit", command=self.exitapp)
         
+        self.bind("<Key">, self.key)
+        
         self.text=Text(self)
         self.text.pack()
         
@@ -30,9 +32,8 @@ class Window(Frame):
         if not self.saved:
             if messagebox.askokcancel("Confirm", "Do you want to save this file?"):
                 self.savefile()
-                
         
-        
+        self.text.delete('1.0', END)
     
     def savefile(self):
         file=filedialog.asksaveasfile(mode='w')
@@ -44,6 +45,11 @@ class Window(Frame):
             self.saved=True
     
     def openfile(self):
+        
+        if not self.saved:
+            if messagebox.askokcancel("Confirm", "Do you want to save this file?"):
+                self.savefile()
+        
         file=filedialog.askopenfile(parent=self, mode='rb', title="Select a file")
         
         if file != None:
@@ -52,7 +58,17 @@ class Window(Frame):
             self.text.insert('1.0', Data)
             file.close()
     
+    def key(self, event):
+        if event.char=="":
+            self.savefile()
+        else:
+            self.saved=False
+    
     def exitwindow(self):
+        if not self.saved:
+            if messagebox.askokcancel("Confirm", "Do you want to save this file?"):
+                self.savefile()
+        
         if messagebox.askokcancel("Exit", "Do you really want to exit?"):
             self.master.destroy()
         
